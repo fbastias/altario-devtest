@@ -21,6 +21,7 @@ export class GeneratorComponent implements OnInit {
   code; //Final user code
   userInput; //Character
   userPressedEnter:boolean = false;
+  disableInput:boolean = false;
   
   constructor() {
     //Call generate function every 2 seconds
@@ -36,6 +37,14 @@ export class GeneratorComponent implements OnInit {
   onKeyUp() {
     this.userPressedEnter = true;
     console.log(this.userInput);
+    this.disableInput = true;
+    setTimeout(()=>{ 
+      this.avaliableInput()
+    }, 4000);
+  }
+
+  avaliableInput() {
+    this.disableInput = false;
   }
   
   generate() {
@@ -60,10 +69,15 @@ export class GeneratorComponent implements OnInit {
         //20% equals 20cells. So each 5 cells I introduze the user input.
         countIterations++;
         if (countIterations == 5 && this.userPressedEnter) {
-          letter = this.userInput;
-          this.tiles.push({ text: [letter], cols: 1, rows: 1, color: 'lightblue' }); //Builds the visual grid
-          this.table[row][col] = letter; //Builds the array to get the data
-          countIterations = 0;
+          if (this.userInput != "") {
+            letter = this.userInput;
+            this.tiles.push({ text: [letter], cols: 1, rows: 1, color: 'lightblue' }); //Builds the visual grid
+            this.table[row][col] = letter; //Builds the array to get the data
+            countIterations = 0;
+          } else {
+            this.tiles.push({ text: [letter], cols: 1, rows: 1, color: 'lightblue' });
+            this.table[row][col] = letter;
+          }
         } else {
           this.tiles.push({ text: [letter], cols: 1, rows: 1, color: 'lightblue' });
           this.table[row][col] = letter;
@@ -71,9 +85,12 @@ export class GeneratorComponent implements OnInit {
       }
     }
     
-    this.generateCode();
+    setTimeout(()=>{ 
+      this.generateCode();
+    }, 500);
   }
 
+  
   generateCode() {
 
     let time = new Date();
