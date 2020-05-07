@@ -8,6 +8,7 @@ import { Tile } from '../generator/generator.component';
 export class SharedService {
   
   public code:any;
+  public rows: Array<{paymentInput: any, ammountInput: any, code: any}>;
 
   constructor() { }
 
@@ -15,8 +16,16 @@ export class SharedService {
     return this.code;
   }
 
-  public setCode(code:number) {
+  public setCode(code:any) {
     this.code = code;
+  }
+
+  public getRows() {
+    return this.rows;
+  }
+
+  public setRows(rows:any) {
+    this.rows = rows;
   }
 
 }

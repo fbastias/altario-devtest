@@ -9,10 +9,10 @@ import { Subscription, interval } from 'rxjs';
 export class PaymentsComponent implements OnInit {
 
   mySubscription: Subscription;
-  code:number;
-  paymentInput:number;
-  ammountInput:number;
-  rows: Array<{paymentInput: number, ammountInput: number, code: number}> = [];
+  code:any;
+  paymentInput:any;
+  ammountInput:any;
+  rows: Array<{paymentInput: any, ammountInput: any, code: any}> = [];
 
   
   constructor(private service:SharedService) {
@@ -22,6 +22,9 @@ export class PaymentsComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    if (this.service.getRows() != undefined) {
+      this.getTable();
+    }
   }
   
   refreshCode() {
@@ -30,6 +33,11 @@ export class PaymentsComponent implements OnInit {
 
   buttonClicked() {
     this.rows.push( {paymentInput: this.paymentInput, ammountInput: this.ammountInput, code: this.code} );
+    this.service.setRows(this.rows);
+  }
+
+  getTable() {
+    this.rows = this.service.getRows();
   }
 
 }

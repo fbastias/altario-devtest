@@ -101,7 +101,7 @@ export class GeneratorComponent implements OnInit {
     for (let i = 0; i < seconds.length; i++) {
       secondsArray.push(+seconds.charAt(i));
     }
-    console.log(secondsArray);
+    /* console.log(secondsArray); */
     
     let letter1 = this.table[secondsArray[0]][secondsArray[1]];
     let letter2 = this.table[secondsArray[1]][secondsArray[0]];
@@ -117,8 +117,8 @@ export class GeneratorComponent implements OnInit {
         }
       }
     }
-    console.log("COUNT1- " + count1);
-    console.log("COUNT2- " + count2);
+    /* console.log("COUNT1- " + count1);
+    console.log("COUNT2- " + count2); */
     
     let result1 = count1;
     let divider = 1;
@@ -128,7 +128,7 @@ export class GeneratorComponent implements OnInit {
         divider++;
       }
     }
-    console.log("RESULT1- " + Math.floor(result1));
+    /* console.log("RESULT1- " + Math.floor(result1)); */
 
     let result2 = count2;
     if (count2 > 9) {
@@ -137,7 +137,7 @@ export class GeneratorComponent implements OnInit {
         divider++;
       }
     }
-    console.log("RESULT2- " + Math.floor(result2)); //WE HAVE TO ROUND UP!!!!!
+    /* console.log("RESULT2- " + Math.floor(result2)); */ //WE HAVE TO ROUND UP!!!!!
   
     this.code = count1.toString() + count2.toString();
     this.service.setCode(this.code);
