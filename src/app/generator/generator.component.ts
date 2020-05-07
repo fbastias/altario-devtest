@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { interval, Subscription} from 'rxjs';
+import { SharedService } from '../services/shared.service';
 
 export interface Tile {
   color: string;
@@ -9,7 +10,8 @@ export interface Tile {
 }
 
 @Component({
-  templateUrl: './generator.component.html',
+  selector: 'app-generator',
+  templateUrl: './generator.component.html', 
   styleUrls: ['./generator.component.scss']
 })
 
@@ -20,10 +22,10 @@ export class GeneratorComponent implements OnInit {
   table:any = "";
   code; //Final user code
   userInput; //Character
-  userPressedEnter:boolean = false;
-  disableInput:boolean = false;
+  userPressedEnter:boolean = false; //Character input
+  disableInput:boolean = false;  //Character input
   
-  constructor() {
+  constructor(private service:SharedService) {
     //Call generate function every 2 seconds
     this.mySubscription= interval(2000).subscribe((x =>{
       this.generate();
@@ -87,7 +89,7 @@ export class GeneratorComponent implements OnInit {
     
     setTimeout(()=>{ 
       this.generateCode();
-    }, 500);
+    }, 300);
   }
 
   
@@ -114,10 +116,42 @@ export class GeneratorComponent implements OnInit {
         }
       }
     }
-  
-    //FAZER A DIVISAO SE SUPERIOR A 9
+    console.log("COUNT1- " + count1);
+    console.log("COUNT2- " + count2);
+    
+    let result1 = count1;
+    let divider = 1;
+    if (count1 > 9) {
+      while (result1 > 9) {
+        result1 = count1/divider;
+        divider++;
+      }
+    }
+    console.log("RESULT1- " + Math.floor(result1));
+
+    let result2 = count2;
+    if (count2 > 9) {
+      while (result2 > 9) {
+        result2 = count2/divider;
+        divider++;
+      }
+    }
+    console.log("RESULT2- " + Math.floor(result2)); //WE HAVE TO ROUND UP!!!!!
   
     this.code = count1.toString() + count2.toString();
+    this.service.setCode(this.code);
   }
+
+/*   divideCounter(count) {
+    let i = 0;
+    let divider = 1;
+    let result;
+    while (result > 9) {
+      result = count/divider;
+      divider++;
+      console.log(result);
+    }
+    return result;
+  } */
 
 }

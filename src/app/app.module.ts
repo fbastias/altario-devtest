@@ -8,11 +8,13 @@ import { GeneratorComponent } from './generator/generator.component';
 import { MatTableModule } from "@angular/material/table";
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule } from '@angular/forms';
+import { PaymentsComponent } from './payments/payments.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GeneratorComponent
+    GeneratorComponent,
+    PaymentsComponent
   ],
   imports: [
     BrowserModule,
