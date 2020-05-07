@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GeneratorComponent } from './generator/generator.component';
 import { MatTableModule } from "@angular/material/table";
 import { MatGridListModule } from '@angular/material/grid-list';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentsComponent } from './payments/payments.component';
 
 @NgModule({
@@ -22,7 +22,8 @@ import { PaymentsComponent } from './payments/payments.component';
     BrowserAnimationsModule,
     MatTableModule,
     MatGridListModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

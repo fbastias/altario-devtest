@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { interval, Subscription} from 'rxjs';
 import { SharedService } from '../services/shared.service';
 
@@ -51,8 +51,6 @@ export class GeneratorComponent implements OnInit {
 
   //Loads the character input in table and disables the input for 4 seconds
   onKeyUp() {
-    this.service.setUserInput(this.userInput);
-    console.log("USER- " + this.service.setUserInput(this.userInput));
     this.userPressedEnter = true;
     this.disableInput = true;
     setTimeout(()=>{ 
@@ -67,7 +65,7 @@ export class GeneratorComponent implements OnInit {
   
   //Generates the table
   generate() {
-    
+
     //Clean variables
     this.table = "";
     this.tiles = [];
@@ -90,8 +88,8 @@ export class GeneratorComponent implements OnInit {
         if (countIterations == 5 && this.userPressedEnter) {
           if (this.service.getUserInput() != "") {
             letter = this.service.getUserInput();
-            this.tiles.push({ text: [letter], cols: 1, rows: 1, color: 'lightblue' }); //Builds the visual grid
-            this.table[row][col] = letter; //Builds the array to get the data
+            this.tiles.push({ text: [this.service.getUserInput()], cols: 1, rows: 1, color: 'lightblue' }); //Builds the visual grid
+            this.table[row][col] = this.service.getUserInput(); //Builds the array to get the data
             countIterations = 0;
           } else {
             this.tiles.push({ text: [letter], cols: 1, rows: 1, color: 'lightblue' });
@@ -103,7 +101,6 @@ export class GeneratorComponent implements OnInit {
         }
       }
     }
-    console.log(this.table);
     
     //Store variables in service to don't loose information when changing pages
     this.service.setTable(this.table);
@@ -119,6 +116,7 @@ export class GeneratorComponent implements OnInit {
   //Generates the final code
   generateCode() {
 
+    //Get time from host system clock
     let time = new Date();
     let seconds = this.seconds_with_leading_zeros(time);
     let secondsArray = [];
@@ -126,6 +124,7 @@ export class GeneratorComponent implements OnInit {
       secondsArray.push(+seconds.charAt(i));
     }
     
+    //Get letters from the array with the seconds of the clock
     let letter1 = this.table[secondsArray[0]][secondsArray[1]];
     let letter2 = this.table[secondsArray[1]][secondsArray[0]];
 
@@ -178,9 +177,11 @@ export class GeneratorComponent implements OnInit {
     return (time.getSeconds() < 10 ? '0' : '') + time.getSeconds();
   }
 
+  //Keeps the visual grid and the final code if the user came from payments page
   refreshCode() {
     this.code = this.service.getCode();
     this.tiles = this.service.getTiles();
+    this.service.setUserInput(this.userInput);
   }
 
 }
