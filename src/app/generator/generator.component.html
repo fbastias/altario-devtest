@@ -9,7 +9,8 @@
 <div class="container text-center">
   <div class="row">
     <div class="col">
-      <input type="text" placeholder="Character" class="generateBtn" [(ngModel)]="userInput" (keyup)="onKeyUp()" [disabled]="disableInput" maxlength="1" /> 
+      <input type="text" placeholder="Character" class="generateBtn form-control" [(ngModel)]="userInput" 
+        (keyup)="onKeyUp()" [disabled]="disableInput" maxlength="1"  /> 
     </div>
     <div class="col">
       <img class="clockStyle" src="assets/clock.png"/>

@@ -14,13 +14,13 @@
 <div class="container text-left">
     <div class="row">
         <div class="col">
-            <input placeholder="Payment" [(ngModel)]="paymentInput"/>
+            <input placeholder="Payment" [(ngModel)]="paymentInput" class="form-control"/>
         </div>
         <div class="col">
-            <input placeholder="Ammount" [(ngModel)]="ammountInput"/>
+            <input placeholder="Ammount" [(ngModel)]="ammountInput" class="form-control"/>
         </div>
         <div class="col">
-            <button (click)="buttonClicked()">+ADD</button>
+            <button (click)="buttonClicked()" class="btn btn-primary">+ADD</button>
         </div>
     </div>
 </div>
@@ -28,7 +28,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <p>Payment List</p>
+            <p class="mt-5"><strong>Payment List</strong></p>
         </div>
     </div>
     <div class="row">
