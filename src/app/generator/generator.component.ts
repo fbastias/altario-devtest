@@ -24,22 +24,36 @@ export class GeneratorComponent implements OnInit {
   userInput; //Character
   userPressedEnter:boolean = false; //Character input
   disableInput:boolean = false;  //Character input
+  generateClick:boolean = false; //Proibs the user to click a second time the generator button
   
-  constructor(private service:SharedService) {
-    //Call generate function every 2 seconds
+  constructor(private service:SharedService) { 
     this.mySubscription= interval(2000).subscribe((x =>{
+      this.refreshCode();
+    }));
+  }
+  
+  ngOnInit(): void {
+    this.generateClick = this.service.getGenerateClick();
+    this.userInput = this.service.getUserInput();
+  }
+  
+  //Generate 2D Grid
+  btnGenerate() {
+    this.generateClick = true;
+    this.service.setGenerateClick(this.generateClick);
+    this.generate();
+
+    //Call generate function every 2 seconds
+    this.mySubscription = interval(2000).subscribe((x =>{
       this.generate();
     }));
   }
 
-  ngOnInit(): void {
-
-  }
-
   //Loads the character input in table and disables the input for 4 seconds
   onKeyUp() {
+    this.service.setUserInput(this.userInput);
+    console.log("USER- " + this.service.setUserInput(this.userInput));
     this.userPressedEnter = true;
-    console.log(this.userInput);
     this.disableInput = true;
     setTimeout(()=>{ 
       this.avaliableInput()
@@ -74,8 +88,8 @@ export class GeneratorComponent implements OnInit {
         //20% equals 20cells. So each 5 cells I introduze the user input.
         countIterations++;
         if (countIterations == 5 && this.userPressedEnter) {
-          if (this.userInput != "") {
-            letter = this.userInput;
+          if (this.service.getUserInput() != "") {
+            letter = this.service.getUserInput();
             this.tiles.push({ text: [letter], cols: 1, rows: 1, color: 'lightblue' }); //Builds the visual grid
             this.table[row][col] = letter; //Builds the array to get the data
             countIterations = 0;
@@ -89,15 +103,19 @@ export class GeneratorComponent implements OnInit {
         }
       }
     }
+    console.log(this.table);
     
+    //Store variables in service to don't loose information when changing pages
     this.service.setTable(this.table);
-
+    this.service.setTiles(this.tiles);
+    
+    //Timeout to give time to all data from array load and then get the final code
     setTimeout(()=>{ 
       this.generateCode();
     }, 300);
-
+    
   }
-
+  
   //Generates the final code
   generateCode() {
 
@@ -110,8 +128,6 @@ export class GeneratorComponent implements OnInit {
     
     let letter1 = this.table[secondsArray[0]][secondsArray[1]];
     let letter2 = this.table[secondsArray[1]][secondsArray[0]];
-    console.log("LETTER1- " + letter1);
-    console.log("LETTER2- " + letter2);
 
     //Letters counters
     let count1 = 0;
@@ -131,9 +147,6 @@ export class GeneratorComponent implements OnInit {
         } 
       }
     }
-  
-    console.log("COUNT1- " + count1);
-    console.log("COUNT2- " + count2);
     
     //Divider if letter counter bigger than 9
     let result1 = count1;
@@ -163,6 +176,11 @@ export class GeneratorComponent implements OnInit {
   //Method to get the left 0 of the first 10 seconds
   seconds_with_leading_zeros(time) { 
     return (time.getSeconds() < 10 ? '0' : '') + time.getSeconds();
+  }
+
+  refreshCode() {
+    this.code = this.service.getCode();
+    this.tiles = this.service.getTiles();
   }
 
 }

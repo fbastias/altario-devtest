@@ -36,8 +36,6 @@ export class PaymentsComponent implements OnInit {
   addRow() {
     this.rows.push( {paymentInput: this.paymentInput, ammountInput: this.ammountInput, code: this.code, table: this.table} );
     this.service.setRows(this.rows);
-    console.log(this.rows);
-    
   }
 
   getTable() {
