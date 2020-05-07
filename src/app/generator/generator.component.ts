@@ -33,7 +33,7 @@ export class GeneratorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
 
   onKeyUp() {
@@ -96,12 +96,13 @@ export class GeneratorComponent implements OnInit {
   generateCode() {
 
     let time = new Date();
-    let seconds = time.getSeconds().toString();
+    let seconds = this.seconds_with_leading_zeros(time);
     let secondsArray = [];
     for (let i = 0; i < seconds.length; i++) {
       secondsArray.push(+seconds.charAt(i));
     }
-  
+    console.log(secondsArray);
+    
     let letter1 = this.table[secondsArray[0]][secondsArray[1]];
     let letter2 = this.table[secondsArray[1]][secondsArray[0]];
   
@@ -142,16 +143,8 @@ export class GeneratorComponent implements OnInit {
     this.service.setCode(this.code);
   }
 
-/*   divideCounter(count) {
-    let i = 0;
-    let divider = 1;
-    let result;
-    while (result > 9) {
-      result = count/divider;
-      divider++;
-      console.log(result);
-    }
-    return result;
-  } */
+  seconds_with_leading_zeros(time) { 
+    return (time.getSeconds() < 10 ? '0' : '') + time.getSeconds();
+  }
 
 }

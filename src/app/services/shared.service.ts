@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Subscription, interval } from 'rxjs';
+import { Tile } from '../generator/generator.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
-
-  private code:number;
+  
+  public code:any;
 
   constructor() { }
 
@@ -16,4 +18,5 @@ export class SharedService {
   public setCode(code:number) {
     this.code = code;
   }
+
 }

@@ -1,4 +1,16 @@
-{{code}}
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-danger mt-3 mb-2" routerLink = "/generator">GENERATOR</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-light border mb-5" disabled>YOUR CODE: <strong>{{code}}</strong></button>
+    </div>
+  </div>
+</div>
+
 
 <div class="container text-left">
     <div class="row">
@@ -33,9 +45,9 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let row of rows">
-                    <th scope="row">1</th>
                     <td>{{row.paymentInput}}</td>
                     <td>{{row.ammountInput}}</td>
+                    <td>{{row.code}}</td>
                     <td>@mdo</td>
                   </tr>
                 </tbody>
