@@ -36,6 +36,7 @@ export class GeneratorComponent implements OnInit {
 
   }
 
+  //Loads the character input in table and disables the input for 4 seconds
   onKeyUp() {
     this.userPressedEnter = true;
     console.log(this.userInput);
@@ -45,10 +46,12 @@ export class GeneratorComponent implements OnInit {
     }, 4000);
   }
 
+  //Permits the character input again
   avaliableInput() {
     this.disableInput = false;
   }
   
+  //Generates the table
   generate() {
     
     //Clean variables
@@ -95,7 +98,7 @@ export class GeneratorComponent implements OnInit {
 
   }
 
-  
+  //Generates the final code
   generateCode() {
 
     let time = new Date();
@@ -104,48 +107,60 @@ export class GeneratorComponent implements OnInit {
     for (let i = 0; i < seconds.length; i++) {
       secondsArray.push(+seconds.charAt(i));
     }
-    /* console.log(secondsArray); */
     
     let letter1 = this.table[secondsArray[0]][secondsArray[1]];
     let letter2 = this.table[secondsArray[1]][secondsArray[0]];
-  
+    console.log("LETTER1- " + letter1);
+    console.log("LETTER2- " + letter2);
+
+    //Letters counters
     let count1 = 0;
     let count2 = 0;
     for (let row = 0; row < this.table.length; row++) {
       for (let col = 0; col < this.table[row].length; col++) {
         if (letter1 == this.table[row][col]) {
           count1++;
-        } else if (letter2 == this.table[row][col]) {
-          count2++;
-        }
+        } 
       }
     }
-    /* console.log("COUNT1- " + count1);
-    console.log("COUNT2- " + count2); */
     
+    for (let row = 0; row < this.table.length; row++) {
+      for (let col = 0; col < this.table[row].length; col++) {
+        if (letter2 == this.table[row][col]) {
+          count2++;
+        } 
+      }
+    }
+  
+    console.log("COUNT1- " + count1);
+    console.log("COUNT2- " + count2);
+    
+    //Divider if letter counter bigger than 9
     let result1 = count1;
     let divider = 1;
     if (count1 > 9) {
       while (result1 > 9) {
         result1 = count1/divider;
         divider++;
+        count1 = Math.floor(result1);
       }
     }
-    /* console.log("RESULT1- " + Math.floor(result1)); */
 
     let result2 = count2;
     if (count2 > 9) {
       while (result2 > 9) {
         result2 = count2/divider;
         divider++;
+        count2 = Math.floor(result2);
       }
     }
-    /* console.log("RESULT2- " + Math.floor(result2)); */ //WE HAVE TO ROUND UP!!!!!
   
+    //Final code
     this.code = count1.toString() + count2.toString();
     this.service.setCode(this.code);
   }
 
+  //Method to get the left 0 of the first 10 seconds
   seconds_with_leading_zeros(time) { 
     return (time.getSeconds() < 10 ? '0' : '') + time.getSeconds();
   }

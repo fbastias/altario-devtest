@@ -33,7 +33,7 @@ export class PaymentsComponent implements OnInit {
     this.table = this.service.getTable();
   }
 
-  buttonClicked() {
+  addRow() {
     this.rows.push( {paymentInput: this.paymentInput, ammountInput: this.ammountInput, code: this.code, table: this.table} );
     this.service.setRows(this.rows);
     console.log(this.rows);
