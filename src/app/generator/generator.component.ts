@@ -87,9 +87,12 @@ export class GeneratorComponent implements OnInit {
       }
     }
     
+    this.service.setTable(this.table);
+
     setTimeout(()=>{ 
       this.generateCode();
     }, 300);
+
   }
 
   

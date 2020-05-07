@@ -10,9 +10,10 @@ export class PaymentsComponent implements OnInit {
 
   mySubscription: Subscription;
   code:any;
+  table:any;
   paymentInput:any;
   ammountInput:any;
-  rows: Array<{paymentInput: any, ammountInput: any, code: any}> = [];
+  rows: Array<{paymentInput: any, ammountInput: any, code: any, table:any}> = [];
 
   
   constructor(private service:SharedService) {
@@ -29,11 +30,14 @@ export class PaymentsComponent implements OnInit {
   
   refreshCode() {
     this.code = this.service.getCode();
+    this.table = this.service.getTable();
   }
 
   buttonClicked() {
-    this.rows.push( {paymentInput: this.paymentInput, ammountInput: this.ammountInput, code: this.code} );
+    this.rows.push( {paymentInput: this.paymentInput, ammountInput: this.ammountInput, code: this.code, table: this.table} );
     this.service.setRows(this.rows);
+    console.log(this.rows);
+    
   }
 
   getTable() {

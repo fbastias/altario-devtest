@@ -8,9 +8,18 @@ import { Tile } from '../generator/generator.component';
 export class SharedService {
   
   public code:any;
-  public rows: Array<{paymentInput: any, ammountInput: any, code: any}>;
+  public table:any;
+  public rows: Array<{paymentInput: any, ammountInput: any, code: any, table:any }>;
 
   constructor() { }
+
+  public getTable() {
+    return this.table;
+  }
+
+  public setTable(table:any) {
+    this.table = table;
+  }
 
   public getCode() {
     return this.code;
