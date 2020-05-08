@@ -13,15 +13,17 @@
 
 <div class="container text-left">
     <div class="row">
-        <div class="col">
-            <input placeholder="Payment" [(ngModel)]="paymentInput" class="form-control"/>
-        </div>
-        <div class="col">
-            <input placeholder="Ammount" [(ngModel)]="ammountInput" class="form-control"/>
-        </div>
-        <div class="col">
-            <button (click)="addRow()" class="btn btn-primary">+ ADD</button>
-        </div>
+        <form ngNativeValidate (ngSubmit)="addRow()" class="form-inline">
+          <div class="form-group m-2">
+            <input placeholder="Payment" [(ngModel)]="paymentInput" [ngModelOptions]="{standalone: true}" class="form-control" required />
+          </div>
+          <div class="form-group m-2">
+              <input placeholder="Ammount" [(ngModel)]="ammountInput" [ngModelOptions]="{standalone: true}" class="form-control" required />
+          </div>
+          <div class="form-group m-2">
+              <button class="btn btn-primary">+ ADD</button>
+          </div>
+        </form>
     </div>
 </div>
 
